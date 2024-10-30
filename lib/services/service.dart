@@ -8,7 +8,7 @@ class ApiService {
   Future<List<Post>> fetchPosts() async {
     // HTTPリクエストを送る
     final response = await http.get(Uri.parse(
-        'https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=2265e4060f4b196b&name=方南町&format=json'));
+        'https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=2265e4060f4b196b&name=肉&count=100&format=json'));
 
     // ステータスコードで応答をチェック
     if (response.statusCode == 200) {
