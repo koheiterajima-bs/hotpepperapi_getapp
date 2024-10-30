@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "123266387717",
+    "project_id": "hotpepper-app",
+    "storage_bucket": "hotpepper-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123266387717:android:b266fc73a9d5382f36716c",
+        "android_client_info": {
+          "package_name": "com.example.hotpepper_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF69b91bMDq-Ci4SoPtc-bIF2Axhinfa8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
