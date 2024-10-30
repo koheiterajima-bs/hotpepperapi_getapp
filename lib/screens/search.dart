@@ -9,6 +9,7 @@ class SearchPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Providerから値を受け取る
     final searchQuery = ref.watch(searchQueryProvider);
+    final postsAsyncValue = ref.watch(postsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -49,6 +50,30 @@ class SearchPage extends ConsumerWidget {
               onPressed: () async {
                 Text('検索ボタンが押されました');
               },
+            ),
+            // 検索結果を表示
+            Expanded(
+              child: postsAsyncValue.when(
+                data: (posts) {
+                  return ListView.builder(
+                      itemCount: posts.length,
+                      itemBuilder: (context, index) {
+                        final post = posts[index];
+                        return ListTile(
+                          title: Text(post.name),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(post.address),
+                              Text(post.id),
+                            ],
+                          ),
+                        );
+                      });
+                },
+                loading: () => Center(child: CircularProgressIndicator()),
+                error: (err, stack) => Center(child: Text('Error: $err')),
+              ),
             ),
             const SizedBox(height: 100),
             Padding(
