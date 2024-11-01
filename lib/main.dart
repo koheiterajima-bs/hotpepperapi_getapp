@@ -6,7 +6,6 @@ import 'screens/reviewConfirm.dart';
 import 'screens/reviewInput.dart';
 import 'screens/search.dart';
 import 'screens/menuList.dart';
-import 'screens/dummy.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -54,10 +53,6 @@ GoRouter router() {
       GoRoute(
         path: '/review-confirm',
         builder: (context, state) => ReviewConfirmPage(),
-      ),
-      GoRoute(
-        path: '/dummy-page',
-        builder: (context, state) => DummyPage(),
       ),
     ],
   );

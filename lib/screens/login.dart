@@ -70,6 +70,13 @@ class LoginPage extends ConsumerWidget {
                   );
                 } catch (e) {
                   Text('ユーザー登録に失敗しました');
+                  // SnackBarでエラーメッセージを表示
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("パスワードは6文字以上である必要があります"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
                 }
                 print("新規登録ボタンが押されました");
               },
@@ -96,6 +103,13 @@ class LoginPage extends ConsumerWidget {
                     print("ログインに成功しました");
                   } catch (e) {
                     Text('ログインに失敗しました');
+                    // SnackBarでエラーメッセージを表示
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("メールアドレスまたはパスワードが間違っています"),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
                   }
                   print("ログインボタンが押されました");
                 }),

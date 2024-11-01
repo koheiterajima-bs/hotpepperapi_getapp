@@ -1,5 +1,6 @@
 // プロバイダー定義ファイル
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/service.dart';
@@ -33,13 +34,56 @@ final reviewTextProvider = StateProvider.autoDispose((ref) {
   return '';
 });
 
-// 検索クエリを保持するProvider
+// お店の名前の検索クエリを保持するProvider
 final searchQueryProvider = StateProvider.autoDispose((ref) {
   return '';
 });
 
-// APIからデータを取得する
-final postsProvider = FutureProvider<List<Post>>((ref) async {
-  final apiService = ApiService();
-  return apiService.fetchPosts();
+// お店の名前の検索における非同期状態を管理するStateNotifierProvider
+final searchResultsProvider =
+    StateNotifierProvider<SearchNotifier, AsyncValue<List<Post>>>(
+  (ref) => SearchNotifier(),
+);
+
+class SearchNotifier extends StateNotifier<AsyncValue<List<Post>>> {
+  final ApiService apiService = ApiService();
+
+  SearchNotifier() : super(const AsyncValue.loading());
+
+  Future<void> fetchPosts(String query) async {
+    state = const AsyncValue.loading();
+    try {
+      final posts = await apiService.fetchPosts(query);
+      state = AsyncValue.data(posts);
+    } catch (error, stackTrace) {
+      state = AsyncValue.error(error, stackTrace);
+    }
+  }
+}
+
+// フリーワード検索の検索クエリを保持するProvider
+final freewordSearchQueryProvider = StateProvider.autoDispose((ref) {
+  return '';
 });
+
+// フリーワード検索における非同期状態を管理するStateNotifierProvider
+final freewordSearchResultsProvider =
+    StateNotifierProvider<FreewordSearchNotifier, AsyncValue<List<Post>>>(
+  (ref) => FreewordSearchNotifier(),
+);
+
+class FreewordSearchNotifier extends StateNotifier<AsyncValue<List<Post>>> {
+  final FreewordApiService freewordApiService = FreewordApiService();
+
+  FreewordSearchNotifier() : super(const AsyncValue.loading());
+
+  Future<void> freewordFetchPosts(String query) async {
+    state = const AsyncValue.loading();
+    try {
+      final posts = await freewordApiService.freewordFetchPosts(query);
+      state = AsyncValue.data(posts);
+    } catch (error, stackTrace) {
+      state = AsyncValue.error(error, stackTrace);
+    }
+  }
+}

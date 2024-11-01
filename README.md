@@ -1,20 +1,5 @@
 # hotpepper_app
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
 ## メモ
 - Firebaseにログイン機能を実装するまで
 https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
@@ -23,17 +8,19 @@ https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
 - 各ページへの遷移->完
 - ログイン機能の実装->完
 - とりあえずAPI通信させる→完
-- APIを用い、検索できるようにする ここから再開！！！！文字入力を行い、検索ボタンを押すことで初めてAPI通信を行うようにしたい、、
-- 
+- ボタンを押した時にAPI通信を行う→完
+- パスワードエラー、検索結果エラーを出せるように→完
+- 検索結果をクリックできるようにする→
+- クリックしたお店の名前を用い、レビュー入力画面に反映→
+- レビューに保存→
 
-
-検索結果を出力するのと、入力結果をURIに入れ込むことがriverpodでできていない状況、どうすればよいか？
-API通信部分と状態管理部分を分けて記述？
 
 ## 何ができないか
-- APIから取得する際にRiverpodの非同期処理の結果を管理するFutureProviderを用い取得しようとしているが、使用方法がいまいちわからない、、
+- APIから取得する際にRiverpodの非同期処理の結果を管理するFutureProviderを用い取得しようとしているが、使用方法がいまいちわからない、、→解決
   - main.dartにて、main関数でProviderScopeを設定する
   - APIから取得するデータを表すモデルクラスを定義する
   - APIへのアクセスやデータ取得ロジックを設定する
   - APIからデータを取得するためのFutureProviderを定義する
   - UIにてConsumerWidgetを使う
+- API取得はできたが、ページ読み込み時ではなく、ボタンを押したときに表示されるようにしたい
+  - FutureProviderではなく、StateNotifierを用いてAPIを非同期で取得して保持する？
