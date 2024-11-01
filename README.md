@@ -14,6 +14,8 @@ https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
 - クリックしたお店の名前を用い、レビュー入力画面に反映→
 - レビューに保存→
 
+- ログイン状態ではログイン画面を表示しない、ログアウトボタンも作成する
+
 
 ## 何ができないか
 - APIから取得する際にRiverpodの非同期処理の結果を管理するFutureProviderを用い取得しようとしているが、使用方法がいまいちわからない、、→解決
