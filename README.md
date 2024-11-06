@@ -11,10 +11,6 @@
 - レビューをCloud Firestoreに保存→完
 - レビュー一覧へCloud Firestoreから取得したものを表示→完
 
-
-あれ、投稿のUUIDってどう設定したっけ？？
-読み込み直しをしないと一覧が更新されない
-
 - 投稿を削除する
 - ログイン状態ではログイン画面を表示しない、ログアウトボタンも作成する
 
@@ -38,3 +34,5 @@
 https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
 - ListTileについて
 https://www.youtube.com/watch?v=eJA0HFpHcXs
+- dismissibleについて
+https://docs.flutter.dev/cookbook/gestures/dismissible

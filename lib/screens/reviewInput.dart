@@ -45,13 +45,21 @@ class ReviewInputPage extends ConsumerWidget {
                 child: Text("レビュー登録する"),
                 onPressed: () async {
                   print("レビューを投稿しました");
+
+                  // 一意のUUIDを取得
+                  final uuid = ref.watch(uuidProvider);
+
                   // ドキュメント作成
-                  await FirebaseFirestore.instance.collection('reviews').add({
-                    'ID': ref.read(emailProvider),
-                    '店名': ref.read(selectedShopProvider) ??
-                        ref.read(selectedShopProvider2) ??
+                  await FirebaseFirestore.instance
+                      .collection('reviews')
+                      .doc(uuid)
+                      .set({
+                    'ID': ref.watch(uuidProvider),
+                    'メールアドレス': ref.watch(emailProvider),
+                    '店名': ref.watch(selectedShopProvider) ??
+                        ref.watch(selectedShopProvider2) ??
                         '未選択です',
-                    'レビュー内容': ref.read(reviewInputProvider)
+                    'レビュー内容': ref.watch(reviewInputProvider),
                   });
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {

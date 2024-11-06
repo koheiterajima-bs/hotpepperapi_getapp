@@ -38,33 +38,45 @@ class ReviewConfirmPage extends ConsumerWidget {
                           itemBuilder: (context, index) {
                             final document = documents.docs[index].data()
                                 as Map<String, dynamic>; // ドキュメントデータを取得
-                            // return Dismissible(
-
-                            // );
-                            return Card(
-                              margin: EdgeInsets.all(10),
-                              color: Colors.red,
-                              child: Column(
-                                children: [
-                                  ListTile(
-                                    leading:
-                                        Icon(Icons.person, color: Colors.white),
-                                    title: Column(
-                                      children: [
-                                        Text(
-                                          'メールアドレス:${document['ID']}',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        Text('店名:${document['店名']}',
+                            // 横スワイプで投稿削除
+                            return Dismissible(
+                              key: Key(document['ID']),
+                              onDismissed: (direction) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('削除されました')));
+                              },
+                              child: Card(
+                                margin: EdgeInsets.all(10),
+                                color: Colors.red,
+                                child: Column(
+                                  children: [
+                                    ListTile(
+                                      leading: Icon(Icons.person,
+                                          color: Colors.white),
+                                      title: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'メールアドレス: ${document['メールアドレス']}',
                                             style:
-                                                TextStyle(color: Colors.white)),
-                                        Text('レビュー内容:${document['レビュー内容']}',
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          Text(
+                                            '店名: ${document['店名']}',
                                             style:
-                                                TextStyle(color: Colors.white)),
-                                      ],
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          Text(
+                                            'レビュー内容: ${document['レビュー内容']}',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           }));
