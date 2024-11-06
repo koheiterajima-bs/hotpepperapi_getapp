@@ -1,10 +1,10 @@
 // プロバイダー定義ファイル
-
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/service.dart';
 import '../models/model.dart';
+import 'package:uuid/uuid.dart';
 
 // StateProviderを使い、変更可能なデータを渡す
 // autoDisposeを付けることで自動的に値をリセットできる
@@ -87,3 +87,25 @@ class FreewordSearchNotifier extends StateNotifier<AsyncValue<List<Post>>> {
     }
   }
 }
+
+// 選択した店名を保持するProvider
+final selectedShopProvider = StateProvider<String?>((ref) => null);
+
+// 選択した店名を保持するProvider2
+final selectedShopProvider2 = StateProvider<String?>((ref) => null);
+
+// レビュー内容を保持するProvider
+final reviewInputProvider = StateProvider<String?>((ref) => null);
+
+// レビューにおける一意のUUIDのProvider
+final uuidProvider = StateProvider<String>((ref) => Uuid().v4());
+
+// レビュー一覧を取得するProvider(FutureProviderはあくまで一度の非同期のみ、常時監視の場合は、StreamProviderを用いる)
+// final firestoreProvider = FutureProvider<List<DocumentSnapshot>>((ref) async {
+//   final snapshot = await FirebaseFirestore.instance.collection('reviews').get();
+//   return snapshot.docs;
+// });
+
+final firestoreProvider = StreamProvider((ref) {
+  return FirebaseFirestore.instance.collection('reviews').snapshots();
+});

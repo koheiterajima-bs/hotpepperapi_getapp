@@ -83,6 +83,17 @@ class SearchPage extends ConsumerWidget {
                                   Text(post.id),
                                 ],
                               ),
+                              onTap: () {
+                                // タップしたら、店名の状態管理を更新し、レビュー入力画面に遷移する
+                                ref.watch(selectedShopProvider.notifier).state =
+                                    post.name;
+                                // print(ref.read(selectedShopProvider));
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context) {
+                                    return ReviewInputPage();
+                                  }),
+                                );
+                              },
                             );
                           }),
                     ),
@@ -119,11 +130,6 @@ class SearchPage extends ConsumerWidget {
                   await ref
                       .read(freewordSearchResultsProvider.notifier)
                       .freewordFetchPosts(freewordSearchQuery);
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(builder: (context) {
-                  //     return ReviewInputPage();
-                  //   }),
-                  // );
                 }),
             // 検索結果を表示
             Expanded(
@@ -151,6 +157,17 @@ class SearchPage extends ConsumerWidget {
                                   Text(post.id),
                                 ],
                               ),
+                              onTap: () {
+                                // タップしたら、店名の状態管理を更新し、レビュー入力画面に遷移する
+                                ref
+                                    .watch(selectedShopProvider2.notifier)
+                                    .state = post.name;
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context) {
+                                    return ReviewInputPage();
+                                  }),
+                                );
+                              },
                             );
                           }),
                     ),
@@ -170,5 +187,4 @@ class SearchPage extends ConsumerWidget {
 /*
 メモ
 - 本当はドロップダウンメニューにしたい
-- この検索ボックスの下に検索結果が出るようにしたい
 */

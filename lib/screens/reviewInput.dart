@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'menuList.dart';
 
 // お気に入り&レビュー入力
-class ReviewInputPage extends StatelessWidget {
+class ReviewInputPage extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -11,6 +15,9 @@ class ReviewInputPage extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.red,
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: Center(
         child: Column(
@@ -18,7 +25,8 @@ class ReviewInputPage extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text('ここにお店の名前が入ります'),
+              child: Text(
+                  'レビューするお店の名前：${ref.read(selectedShopProvider) ?? ref.read(selectedShopProvider2) ?? '未選択です'}'),
             ),
             const SizedBox(height: 15),
             Padding(
@@ -26,13 +34,29 @@ class ReviewInputPage extends StatelessWidget {
               child: TextFormField(
                 // テキスト入力のラベルを設定
                 decoration: InputDecoration(labelText: "レビュー入力"),
+                onChanged: (String value) {
+                  // ユーザーの入力をProviderに保存
+                  ref.watch(reviewInputProvider.notifier).state = value;
+                },
               ),
             ),
             const SizedBox(height: 15),
             ElevatedButton(
                 child: Text("レビュー登録する"),
-                onPressed: () {
+                onPressed: () async {
                   print("レビューを投稿しました");
+                  // ドキュメント作成
+                  await FirebaseFirestore.instance.collection('reviews').add({
+                    'ID': ref.read(emailProvider),
+                    '店名': ref.read(selectedShopProvider) ??
+                        ref.read(selectedShopProvider2) ??
+                        '未選択です',
+                    'レビュー内容': ref.read(reviewInputProvider)
+                  });
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return MenuPage();
+                  }));
                 }),
           ],
         ),

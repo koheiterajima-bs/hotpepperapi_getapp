@@ -1,19 +1,21 @@
 # hotpepper_app
 
-## メモ
-- Firebaseにログイン機能を実装するまで
-https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
-
 ## 進捗
 - 各ページへの遷移->完
 - ログイン機能の実装->完
 - とりあえずAPI通信させる→完
 - ボタンを押した時にAPI通信を行う→完
 - パスワードエラー、検索結果エラーを出せるように→完
-- 検索結果をクリックできるようにする→
-- クリックしたお店の名前を用い、レビュー入力画面に反映→
-- レビューに保存→
+- 検索結果をクリック、ホバーできるようにする→完
+- クリックしたお店の名前を用い、レビュー入力画面に反映→完
+- レビューをCloud Firestoreに保存→完
+- レビュー一覧へCloud Firestoreから取得したものを表示→完
 
+
+あれ、投稿のUUIDってどう設定したっけ？？
+読み込み直しをしないと一覧が更新されない
+
+- 投稿を削除する
 - ログイン状態ではログイン画面を表示しない、ログアウトボタンも作成する
 
 
@@ -24,5 +26,15 @@ https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
   - APIへのアクセスやデータ取得ロジックを設定する
   - APIからデータを取得するためのFutureProviderを定義する
   - UIにてConsumerWidgetを使う
-- API取得はできたが、ページ読み込み時ではなく、ボタンを押したときに表示されるようにしたい
-  - FutureProviderではなく、StateNotifierを用いてAPIを非同期で取得して保持する？
+- API取得はできたが、ページ読み込み時ではなく、ボタンを押したときに表示されるようにしたい→解決
+  - FutureProviderではなく、StateNotifierProviderを用いてAPIを非同期で取得して保持する
+- 検索結果のホバーとクリック→解決
+  - ListTileの中でonTapを設定
+- 監視を常時行うには？→解決
+  - StreamProviderを用いる
+
+## 参考
+- Firebaseにログイン機能を実装するまで
+https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
+- ListTileについて
+https://www.youtube.com/watch?v=eJA0HFpHcXs
