@@ -10,8 +10,7 @@
 - クリックしたお店の名前を用い、レビュー入力画面に反映→完
 - レビューをCloud Firestoreに保存→完
 - レビュー一覧へCloud Firestoreから取得したものを表示→完
-
-- 投稿を削除する
+- 投稿を削除する→完
 - ログイン状態ではログイン画面を表示しない、ログアウトボタンも作成する
 
 
@@ -28,6 +27,13 @@
   - ListTileの中でonTapを設定
 - 監視を常時行うには？→解決
   - StreamProviderを用いる
+- ListViewを消していくと最後の1つだけ消えない
+  - Dismissibleウィジェットが削除の際にツリーから適切に更新されていない？
+- リストから削除するとエラーが出る
+A dismissed Dismissible widget is still part of the tree.
+Make sure to implement the onDismissed handler and to immediately remove the Dismissible widget from the application once that handler has fired.
+See also: https://docs.flutter.dev/testing/errors
+  - 条件分岐にてcontext.mountedかどうかを見ることでエラーは消える
 
 ## 参考
 - Firebaseにログイン機能を実装するまで

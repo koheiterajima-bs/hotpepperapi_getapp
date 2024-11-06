@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // お気に入り&レビュー確認
 class ReviewConfirmPage extends ConsumerWidget {
@@ -41,9 +42,27 @@ class ReviewConfirmPage extends ConsumerWidget {
                             // 横スワイプで投稿削除
                             return Dismissible(
                               key: Key(document['ID']),
-                              onDismissed: (direction) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('削除されました')));
+                              onDismissed: (direction) async {
+                                try {
+                                  // 投稿削除
+                                  await FirebaseFirestore.instance
+                                      .collection('reviews')
+                                      .doc(documents.docs[index].id)
+                                      .delete();
+
+                                  // ウィジェットがまだマウントされているか確認
+                                  // Dismissibleの操作が完了した後、SnackBarを表示しようとした時にウィジェットが既に非アクティブになっている
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('削除されました')));
+                                  }
+                                } catch (e) {
+                                  print('削除エラー: $e'); // エラーログを確認
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('削除に失敗しました')));
+                                  }
+                                }
                               },
                               child: Card(
                                 margin: EdgeInsets.all(10),

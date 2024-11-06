@@ -7,6 +7,7 @@ import 'screens/reviewInput.dart';
 import 'screens/search.dart';
 import 'screens/menuList.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 
 // Firebaseの初期化が完了するまでに他の処理を開始しないように非同期にする
@@ -36,7 +37,15 @@ GoRouter router() {
     routes: [
       GoRoute(
         path: '/login',
-        builder: (context, state) => LoginPage(),
+        builder: (context, state) {
+          final user = FirebaseAuth.instance.currentUser;
+          // ログインしていれば、MenuPageに遷移
+          if (user != null) {
+            return MenuPage();
+          } else {
+            return LoginPage();
+          }
+        },
       ),
       GoRoute(
         path: '/menu-list',

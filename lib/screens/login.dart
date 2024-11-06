@@ -23,6 +23,7 @@ class LoginPage extends ConsumerWidget {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.red,
+        automaticallyImplyLeading: false, // 戻るボタンを非表示にする
       ),
       body: Center(
         child: Column(
